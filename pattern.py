@@ -56,14 +56,16 @@ class Pattern:
         self._h_lines = horizontal_lines
         self._v_lines = vertical_lines
 
-    def _draw_pattern(self):
-        for i in range(self.h_lines):
-            for j in range(self.v_lines):
-                pass
+    def draw_pattern(self):
+        for i in range(len(self.h_lines)):
+            for j in range(len(self.v_lines)):
+                print(self._h_lines[i] , self._v_lines[j])
+                
 
 horizontal_lines = [1,1,0,1,0,0,1,0,0,0,0,1,1,1,0,1]
 vertical_lines = [0,0,1,1,0,0,1,0,0,1,1,1,1]
 
 new_pattern = Pattern(horizontal_lines, vertical_lines)
+new_pattern.draw_pattern()
 
 print(new_pattern._h_lines)
