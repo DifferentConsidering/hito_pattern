@@ -10,6 +10,12 @@ class Window:
         self.__canvas.pack(fill=BOTH, expand=1)
         self.__running = False
 
+    def draw_line(self, line, fill_color="black"):
+        self.__canvas.create_line(
+            line.p1.x, line.p1.y, line.p2.x, line.p2.y, fill=fill_color, width=2
+        )
+        self.__canvas.pack(fill=BOTH, expand=1)
+
     def redraw(self):
         self.__root.update_idletasks()
         self.__root.update()
@@ -19,9 +25,6 @@ class Window:
         while self.__running:
             self.redraw()
         print("window closed...")
-
-    def draw_line(self, line, fill_color="black"):
-        line.draw(self.__canvas, fill_color)
 
     def close(self):
         self.__running = False
@@ -40,12 +43,6 @@ class Line:
     ):
         self.p1 = p1
         self.p2 = p2
-
-    def draw(self, canvas, fill_color="black"):
-        canvas.create_line(
-            self.p1.x, self.p1.y, self.p2.x, self.p2.y, fill=fill_color, width=2
-        )
-        canvas.pack(fill=BOTH, expand=1)
 
 class Pattern:
     def __init__(
@@ -76,7 +73,7 @@ class Pattern:
                     point2 = Point(self._current_point[0] + self._line_length, self._current_point[1])
                     line = Line(point1, point2)
                     print("Drawing Horizontal Line")
-                    self.window.draw_line(self)
+                    self.window.draw_line(self, line)
 
                 self._current_point[1] += self._line_length
 
