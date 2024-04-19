@@ -51,21 +51,43 @@ class Pattern:
     def __init__(
             self,
             h_lines,
-            v_lines
+            v_lines,
+            line_length,
+            window = None
     ):
-        self._h_lines = horizontal_lines
-        self._v_lines = vertical_lines
+        self._h_lines = h_lines
+        self._v_lines = v_lines
+        self._line_length = line_length
+        self._current_point = [line_length, line_length]
+        self.window = window
 
     def draw_pattern(self):
-        for i in range(len(self.h_lines)):
-            for j in range(len(self.v_lines)):
-                print(self._h_lines[i] , self._v_lines[j])
-                
+        for i in range(len(self._h_lines)):
+            for j in range(len(self._v_lines)):
+                if (self._h_lines[i] ^ int(((self._current_point[1] / self._line_length) % 2))):
+                    point1 = Point(self._current_point[0], self._current_point[1])
+                    point2 = Point(self._current_point[0], self._current_point[1] + self._line_length)
+                    line = Line(point1, point2)
+                    print("Drawing Vertical Line")
+                    self.window.draw_line(self, line)
+
+                if (self._v_lines[j] ^ int(((self._current_point[0] / self._line_length) % 2))):
+                    point1 = Point(self._current_point[0], self._current_point[1])
+                    point2 = Point(self._current_point[0] + self._line_length, self._current_point[1])
+                    line = Line(point1, point2)
+                    print("Drawing Horizontal Line")
+                    self.window.draw_line(self)
+
+                self._current_point[1] += self._line_length
+
+            self._current_point[1] += self._line_length
+            self._current_point[0] += self._line_length
 
 horizontal_lines = [1,1,0,1,0,0,1,0,0,0,0,1,1,1,0,1]
 vertical_lines = [0,0,1,1,0,0,1,0,0,1,1,1,1]
 
-new_pattern = Pattern(horizontal_lines, vertical_lines)
+window = Window(len(horizontal_lines), len(vertical_lines))
+new_pattern = Pattern(horizontal_lines, vertical_lines, 10, window)
 new_pattern.draw_pattern()
 
-print(new_pattern._h_lines)
+print(new_pattern._h_lines, new_pattern._v_lines)
