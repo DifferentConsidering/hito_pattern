@@ -5,11 +5,16 @@ from pattern import Pattern
 
 def main():
 
-    horizontal_lines = [1,1,0,1,0,0,1,0,0,0,0,1,1,1,0,1]
-    vertical_lines = [0,0,1,1,0,0,1,0,0,1,1,1,1]
+    # Typically first and last name. Input will be split for horizontal and vertical lines.
+    text = input('Enter text for the pattern: \r \n')
+    all_bytes = ''.join(format(ord(i), '08b') for i in text)
+    print(all_bytes)
+    horizontal_lines = all_bytes[:len(all_bytes) // 2]
+    vertical_lines = all_bytes[len(all_bytes) // 2 :]
+    line_width = 20
 
-    window = Window(len(horizontal_lines), len(vertical_lines))
-    new_pattern = Pattern(horizontal_lines, vertical_lines, 10, window)
+    window = Window(800, 600)
+    new_pattern = Pattern(horizontal_lines, vertical_lines, line_width, window)
     new_pattern.draw_pattern()
 
 

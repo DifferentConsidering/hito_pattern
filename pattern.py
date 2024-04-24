@@ -12,7 +12,7 @@ class Pattern:
         self._h_lines = h_lines
         self._v_lines = v_lines
         self._line_length = line_length
-        self._current_point = [line_length, line_length]
+        self.current_point = Point(line_length, line_length)
         self.window = window
 
     def _animate(self):
@@ -28,21 +28,23 @@ class Pattern:
         else:
             for i in range(len(self._h_lines)):
                 for j in range(len(self._v_lines)):
-                    if (self._h_lines[i] ^ int(((self._current_point[1] / self._line_length) % 2))):
-                        point1 = Point(self._current_point[0], self._current_point[1])
-                        point2 = Point(self._current_point[0], self._current_point[1] + self._line_length)
+                    if (int(self._h_lines[i]) ^ int(((self.current_point.y / self._line_length) % 2))):
+                        point1 = Point(self.current_point.x, self.current_point.y)
+                        point2 = Point(self.current_point.x, self.current_point.y + self._line_length)
                         line = Line(point1, point2)
                         print("Drawing Vertical Line")
                         self.window.draw_line(line)
+                        self._animate()
 
-                    if (self._v_lines[j] ^ int(((self._current_point[0] / self._line_length) % 2))):
-                        point1 = Point(self._current_point[0], self._current_point[1])
-                        point2 = Point(self._current_point[0] + self._line_length, self._current_point[1])
+                    if (int(self._v_lines[j]) ^ int(((self.current_point.x / self._line_length) % 2))):
+                        point1 = Point(self.current_point.x, self.current_point.y)
+                        point2 = Point(self.current_point.x + self._line_length, self.current_point.y)
                         line = Line(point1, point2)
                         print("Drawing Horizontal Line")
                         self.window.draw_line(line)
+                        self._animate()
 
-                    self._current_point[1] += self._line_length
+                    self.current_point.y += self._line_length
 
-                self._current_point[1] += self._line_length
-                self._current_point[0] += self._line_length
+                self.current_point.y = self._line_length
+                self.current_point.x += self._line_length
