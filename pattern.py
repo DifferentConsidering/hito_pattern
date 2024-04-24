@@ -19,7 +19,7 @@ class Pattern:
         if self.window is None:
             return
         self.window.redraw()
-        time.sleep(0.02)
+        time.sleep(0.002)
 
     def draw_pattern(self):
 
